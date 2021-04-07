@@ -1,6 +1,7 @@
 package com.main;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -30,10 +31,10 @@ public class MainClass {
 			
 			str = scanner.next();
 			if(str.equals("3")) {
-				System.out.println("Bye~~");
+				System.out.println("Bye");
 				break;
 			} else if(str.equals("2")) {
-				LinkedList<User> userList = userService.getUserList();
+				List<User> userList = userService.getUserList();
 				System.out.printf("%-15s%-20s%s\n", "userName","userId","userPw");
 				for(User user : userList) { //for문을 통한 전체출력
 					System.out.printf("%-15s%-20s%s\n", user.getUserName(), user.getUserId(), user.getUserPw());
@@ -52,13 +53,13 @@ public class MainClass {
 				scanner = new Scanner(System.in);
 				String userPw = scanner.next();
 				
-				User newUser = ctx.getBean("user", User.class);
+				User newUser = new User();
 				newUser.setUserInfo(userName, userId, userPw);
 				
 				userService.userRegister(newUser);
 			}
 			
 		}
-		
+		ctx.close();
 	}
 }

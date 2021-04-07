@@ -1,6 +1,7 @@
 package com.user.service;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import com.user.User;
 import com.user.dao.UserDao;
@@ -22,8 +23,8 @@ public class UserService {
 		}
 	}
 	
-	public LinkedList<User> getUserList() {
-		LinkedList<User> userList = dao.getUserList();
+	public List<User> getUserList() {
+		List<User> userList = dao.getUserList();
 		return userList;
 	}
 }

@@ -11,6 +11,4 @@
 		<constructor-arg ref="userDao"/>
 	</bean>
 	
-	<bean id="user" class="com.user.User" scope="prototype"/>
-	
 </beans>
