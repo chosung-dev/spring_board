@@ -52,4 +52,35 @@ public class UserDao {
 		return userList;
 	}
 	
+	public User userSearch(String userId, String userPassword) {
+		System.out.println(userId+" "+userPassword);
+		List<User> userList = null;
+		final String sql = "SELECT * FROM user WHERE id= ? AND password= ?";
+		
+		userList = template.query(sql, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement pstmt) throws SQLException {
+				// TODO Auto-generated method stub	
+				pstmt.setString(1, userId);
+				pstmt.setString(2, userPassword);
+			}
+		}, new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				// TODO Auto-generated method stub
+				User user = new User();
+				user.setUserName(rs.getString("name"));
+				user.setUserId(rs.getString("id"));
+				user.setUserPw(rs.getString("password"));
+				
+				return user;
+			}
+		});
+		
+		if(userList.size()==0) {
+			return null;
+		} else {
+			return userList.get(0);
+		}
+	}
 }
