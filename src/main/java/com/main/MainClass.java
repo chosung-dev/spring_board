@@ -1,20 +1,18 @@
 package com.main;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.user.User;
-import com.user.dao.UserDao;
+import com.user.configration.UserConfig;
 import com.user.service.UserService;
 
 
 public class MainClass {
 	public static void main(String[] args) {
-		GenericXmlApplicationContext ctx = 
-				new GenericXmlApplicationContext("classpath:applicationContext.xml");
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(UserConfig.class);
 		
 		UserService userService = ctx.getBean("userService", UserService.class);
 		

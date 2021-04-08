@@ -9,28 +9,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.mchange.v2.c3p0.DriverManagerDataSource;
 import com.user.User;
 
 public class UserDao {
-	private String driver = "com.mysql.cj.jdbc.Driver";
-	private String url = "jdbc:mysql://localhost:3306/spring_board?serverTimezone=Asia/Seoul";
-	private String userid = "root";
-	private String userpw = "pw1234";
-	
-	private DriverManagerDataSource dataSource;
-	
 	private JdbcTemplate template;
 	
-	public UserDao() {
-		dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClass(driver);
-		dataSource.setJdbcUrl(url);
-		dataSource.setUser(userid);
-		dataSource.setPassword(userpw);
-		
-		template = new JdbcTemplate();
-		template.setDataSource(dataSource);
+	public UserDao(JdbcTemplate template) {
+		this.template = template;
 	}
 	
 	public int userInsert(User user) {

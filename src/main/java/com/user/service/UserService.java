@@ -1,6 +1,5 @@
 package com.user.service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import com.user.User;
