@@ -39,5 +39,4 @@ public class UserConfig {
 		template.setDataSource(dataSource);
 		return template;
 	}
-	 
 }

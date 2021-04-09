@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,5 +18,25 @@
 <%} else {%>
 	<p>${userName}님 반갑습니다</p> <a href="/spring_board/userLogout">LogOut</a>
 <%} %>
+
+	<table>
+	<tr><th>글 제목</th></tr>
+	<c:forEach items="${boardList}" var="list">
+	<tr>
+		<td>${list}<td>
+	</tr>
+	</c:forEach>
+	</table>
+	<c:if test="${1 ne startNum}">
+		<a href="/spring_board/board/page/${startNum-1}"><</a>
+	</c:if>
+	<c:forEach var="i" begin="${startNum}" end="${startNum+4}">
+		<a href="/spring_board/board/page/${i}">${i}</a>
+	</c:forEach>
+	<c:if test="${10 eq fn:length(boardList)}">
+		<a href="/spring_board/board/page/${startNum+5}">></a>
+	</c:if>
+	
+
 </body>
 </html>
