@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.board.Board;
 import com.user.User;
 
 public class BoardDao {
@@ -19,8 +20,8 @@ public class BoardDao {
 	}
 	
 	//게시판 리스트 n~n+10개까지 조회
-	public List<String> selectBoardTittle(int n) {
-		List<String> boardTitleList = null;
+	public List<Board> selectBoardTittle(int n) {
+		List<Board> boardTitleList = null;
 		
 		final String sql = "SELECT id, tittle FROM board order by `id` desc limit ?, ?";
 		
@@ -34,17 +35,38 @@ public class BoardDao {
 					pstmt.setInt(1, n*10);
 				}
 				pstmt.setInt(2, 10);
-				System.out.println(pstmt.toString());
 			}
-		}, new RowMapper<String>() {
+		}, new RowMapper<Board>() {
 			@Override
-			public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+			public Board mapRow(ResultSet rs, int rowNum) throws SQLException {
 				// TODO Auto-generated method stub
-				return rs.getString("tittle");
+				return new Board(rs.getString("id"), rs.getString("tittle"), null, null, null);
 			}
 		});
 		
 		return boardTitleList;
+	}
+	
+	public Board getBoard(String boardId) {
+		Board board = null;
+		
+		final String sql_board = "SELECT * FROM board WHERE id = ?";
+		
+		board = template.query(sql_board, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement pstmt) throws SQLException {
+				// TODO Auto-generated method stub	
+				pstmt.setString(1, boardId);
+			}
+		}, new RowMapper<Board>() {
+			@Override
+			public Board mapRow(ResultSet rs, int rowNum) throws SQLException {
+				// TODO Auto-generated method stub
+				return new Board(rs.getString("id"), rs.getString("tittle"), rs.getString("content"), rs.getString("user_id"), rs.getString("time"));
+			}
+		}).get(0);
+		
+		return board;
 	}
 	
 	

@@ -56,7 +56,7 @@ public class UserController {
 		return "userJoinOK";
 	}
 	
-	@RequestMapping(value="/userLogin", method=RequestMethod.POST)
+	@RequestMapping(value="userLogin", method=RequestMethod.POST)
 	public String userLogin(Model model, HttpServletRequest request) {
 		
 		String userId = request.getParameter("userId");

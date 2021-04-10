@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.board.Board;
 import com.board.service.BoardService;
 import com.user.User;
 
@@ -31,7 +32,7 @@ public class BoardController {
 		if(pageNum==0) {
 			pageNum = 1;
 		}
-		List<String> boardList = boardService.getBoardTitleList(pageNum-1);
+		List<Board> boardList = boardService.getBoardTitleList(pageNum-1);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pageNum", pageNum);
 		int startNum = (pageNum-1)/5;
@@ -55,6 +56,15 @@ public class BoardController {
 		return "createBoard";
 	}
 	
+	@RequestMapping("/board/info/{boardId}")
+	public String boardInfo(Model model,HttpServletRequest request, @PathVariable String boardId) {
+		Board board = boardService.getBoardInfo(boardId);
+		
+		model.addAttribute("board", board);
+		
+		return "board";
+	}
+	
 	@RequestMapping("/board/save")
 	public String boardSave(Model model,HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -67,6 +77,18 @@ public class BoardController {
 		
 
 		return homeBoard(model, 0, request);
+	}
+	
+	@RequestMapping("/board/info/{boardId}/createComment")
+	public String createBoardContent(Model model,HttpServletRequest request, @PathVariable String boardId) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user==null) {
+			return "redirect:/login";
+		}
+		boardService.insertBoardComment(boardId, request.getParameter("content"), user.getUserId());
+
+		return "redirect:/board/info/"+boardId;
 	}
 
 }

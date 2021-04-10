@@ -24,7 +24,7 @@
 	<tr><th>글 제목</th></tr>
 	<c:forEach items="${boardList}" var="list">
 	<tr>
-		<td>${list}<td>
+		<td><a href="/spring_board/board/info/${list.getId()}">${list.getTitle()}</a><td>
 	</tr>
 	</c:forEach>
 	</table>

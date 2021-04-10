@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.board.Board;
 import com.board.service.BoardService;
 import com.user.User;
 
@@ -29,7 +30,7 @@ public class HomeController {
 			model.addAttribute("userName", user.getUserName());
 		}
 		
-		List<String> boardList = boardService.getBoardTitleList(0);
+		List<Board> boardList = boardService.getBoardTitleList(0);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pageNum", 1);
 		model.addAttribute("startNum", 1);

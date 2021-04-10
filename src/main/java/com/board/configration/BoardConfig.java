@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.board.dao.BoardDao;
+import com.board.dao.CommentDao;
 import com.board.service.BoardService;
 
 @Configuration
@@ -19,10 +20,14 @@ public class BoardConfig {
 		return new BoardDao(template);
 	}
 	
+	@Bean
+	public CommentDao commentDao() {
+		return new CommentDao(template);
+	}
 	
 	@Bean
 	public BoardService boardService() {
-		return new BoardService(boardDao());
+		return new BoardService(boardDao(), commentDao());
 	}
 	
 }
