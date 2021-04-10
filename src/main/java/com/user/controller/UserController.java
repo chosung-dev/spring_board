@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.HomeController;
 import com.mysql.cj.Session;
 import com.user.User;
 import com.user.service.UserService;
@@ -19,6 +20,8 @@ public class UserController {
 	
 	@Autowired
 	UserService service;
+	
+	private String homeView = "redirect:/";
 	
 	@RequestMapping("/login")
 	public String login(Model model) {
@@ -44,7 +47,7 @@ public class UserController {
 		result = service.userRegister(user);
 		if(result==0) {
 			System.out.println("가입 실패");
-			return "home";
+			return homeView;
 		}
 		
 		model.addAttribute("userId", user.getUserId());
@@ -62,7 +65,7 @@ public class UserController {
 		User user = service.userSearch(userId, userPw);
 		if(user==null) {
 			System.out.println("로그인 실패");
-			return "home";
+			return homeView;
 		}
 		
 		try {
@@ -88,6 +91,6 @@ public class UserController {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		return "home";
+		return homeView;
 	}
 }

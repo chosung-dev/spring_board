@@ -40,5 +40,33 @@ public class BoardController {
 		
 		return "home";
 	}
+	
+	@RequestMapping("/board/create")
+	public String createBoard(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user!=null) {
+			model.addAttribute("userId", user.getUserId());
+			model.addAttribute("userName", user.getUserName());
+		} else {
+			return homeBoard(model, 0, request);
+		}
+		
+		return "createBoard";
+	}
+	
+	@RequestMapping("/board/save")
+	public String boardSave(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		if(user==null) {
+			return homeBoard(model, 0, request);
+		}
+		
+		boardService.insertBoard(request.getParameter("title"), request.getParameter("content"), user);
+		
+
+		return homeBoard(model, 0, request);
+	}
 
 }
